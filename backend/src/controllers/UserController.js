@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const UserRoutes = require("../routes/UserRoutes");
 const User = require("../model/User");
 
 
@@ -45,25 +44,27 @@ const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        //validate
-        if (!email || !password) {
-            return res.status(400).json({ message: "All fields are important!" });
-        }
+        const userValid = await User.findOne({ email: email.toLowerCase() });
 
-        const userData = await User.findOne({ email: email.toLowerCase(), password: password });
+        if (!userValid) return res.status(400).json({
+            message: "Email not valid"
+        })
 
-        if (!userData) {
-            return res.status(400).json({ message: "User not found" });
-        }
+
+        //compare passwords
+        const isMatch = await userValid.comparePassword(password);
+        if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+
         res.status(200).json({
-            message: "Loged in Sucessfully",
-            userData: {
-                id: userData._id,
-                email: userData.email,
-                name: userData.name,
-                loggedIn: true
+            message: "User Logged in",
+            user: {
+                id: userValid._id,
+                email: userValid.email,
+                name: userValid.name
             }
-        });
+        })
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "User not loged in" })

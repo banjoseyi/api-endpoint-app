@@ -21,7 +21,7 @@ const startServer = async () => {
         app.listen(5000, () => {
             console.log(`app listening on port http://localhost:5000`);
         })
-    } catch (error) {
+    } catch (err) {
         console.error(err)   
     }
 }
