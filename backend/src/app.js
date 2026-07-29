@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const connectDB = require("./config/database");
 const UserRoutes = require("./routes/UserRoutes")
+const PORT = process.env.PORT || 5000;
 
 
 
@@ -18,7 +19,7 @@ const startServer = async () => {
             throw error
         });
 
-        app.listen(5000, () => {
+        app.listen(PORT, () => {
             console.log(`app listening on port http://localhost:5000`);
         })
     } catch (err) {

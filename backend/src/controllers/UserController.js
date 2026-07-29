@@ -68,19 +68,25 @@ const registerUser = async (req, res) => {
   }
 };
 
-
+//Login User
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and password are required",
+      });
+    }
 
     const userValid = await User.findOne({ email: email.toLowerCase() });
 
     if (!userValid)
       return res.status(400).json({
-        message: "Email not valid",
+        message: "Invalid email or password",
       });
 
-    //compare passwords
+    //compare passwords 
     const isMatch = await userValid.comparePassword(password);
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
