@@ -1,26 +1,38 @@
 const mongoose = require("mongoose");
-const { modelName } = require("./User");
 
 const planSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true,
+            required: [true, "Plan name is required"],
+            trim: true,
+            unique: true,
         },
         description: {
             type: String,
-            required: true
+            required: [true, "Plan description is required"],
+            trim: true,
         },
         price: {
             type: Number,
-            required: true
+            required: [true, "Plan price is required"],
+            min: [0, "Price cannot be negative"],
         },
-        interval: {
+        billingInterval: {
             type: String,
-            enum: ["monthly", yearly],
-            default: "monthly"
-        }
-    }, { timestamps: true }
+            enum: ["monthly", "yearly"],
+            default: "monthly",
+        },
+        features: {
+            type: [String],
+            default: [],
+        },
+        isActive: {
+            type: Boolean,
+            default: true,
+        },
+    },
+    { timestamps: true },
 );
 
 module.exports = mongoose.model("Plan", planSchema);

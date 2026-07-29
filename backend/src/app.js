@@ -1,7 +1,10 @@
 const express = require("express");
 require("dotenv").config();
 const connectDB = require("./config/database");
-const UserRoutes = require("./routes/UserRoutes")
+const UserRoutes = require("./routes/UserRoutes");
+const SubscriptionRoutes = require("./routes/SubscriptionRoutes");
+const PlanRoutes = require("./routes/PlanRoutes");
+
 const PORT = process.env.PORT || 5000;
 
 
@@ -23,11 +26,14 @@ const startServer = async () => {
             console.log(`app listening on port http://localhost:5000`);
         })
     } catch (err) {
-        console.error(err)   
+        console.error(err)
     }
 }
 
 app.use("/api/users", UserRoutes);
+
+// app.use("/api/subscribe", SubscriptionRoutes);
+app.use("/api/plans", PlanRoutes);
 
 
 startServer();
