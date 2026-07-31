@@ -17,23 +17,28 @@ const startServer = async () => {
     try {
         await connectDB()
 
-        app.on("error", (error) => {
-            console.log("ERROR", error);
-            throw error
+        const server = app.listen(PORT, () => {
+            console.log(`App listening at http://localhost:${PORT}`);
         });
 
-        app.listen(PORT, () => {
-            console.log(`app listening on port http://localhost:5000`);
-        })
+        server.on("error", (error) => {
+            console.error("Server error:", error);
+        });
+        
     } catch (err) {
         console.error(err)
     }
 }
 
+//sends User req to UserRoutes
 app.use("/api/users", UserRoutes);
 
-// app.use("/api/subscribe", SubscriptionRoutes);
+//sends Plans req to PlanRoutes
 app.use("/api/plans", PlanRoutes);
+
+//sends Subscription req to SubscriptionRoutes
+app.use("/api/subscribe", SubscriptionRoutes);
+
 
 
 startServer();

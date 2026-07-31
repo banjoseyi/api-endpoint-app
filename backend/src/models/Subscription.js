@@ -50,6 +50,10 @@ const subscriptionSchema = new mongoose.Schema(
                 enum: ["monthly", "yearly"],
                 required: true,
             },
+            features: {
+                type: [String],
+                default: [],
+            },
         },
     },
     { timestamps: true },

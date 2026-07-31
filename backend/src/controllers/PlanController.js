@@ -1,6 +1,6 @@
 // controllers/planController.js
 const mongoose = require("mongoose");
-const Plan = require("../model/Plan");
+const Plan = require("../models/Plan");
 
 //GetAll new plans
 const getAllPlan = async (req, res) => {

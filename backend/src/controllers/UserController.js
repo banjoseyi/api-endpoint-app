@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("../model/User");
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
@@ -26,7 +26,7 @@ const registerUser = async (req, res) => {
 
     return res.status(201).json({
       message: "User registered",
-      user: {
+      user: { 
         id: user._id,
         email: user.email,
         name: user.name,
